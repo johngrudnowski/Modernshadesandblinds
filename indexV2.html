@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modern Blinds &amp; Shades — Twin Cities Window Treatments</title>
+  <meta name="description" content="Window treatments designed and installed by a Twin Cities specialist — for lake homes and the designers who serve them. Hunter Douglas and Graber dealer. Display carts at Ridgedale, Southdale, and Eden Prairie.">
+  <!-- V2 — Editorial wordmark direction -->
+
+  <!-- Fraunces (serif for headlines) + Manrope (sans for nav/CTAs/body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Manrope:wght@500&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       DESIGN TOKENS
+       Edit these to retune the system.
+       ========================================================= */
+    :root {
+      --paper:    #FCFAF5;   /* warm cream — base background */
+      --paper-2:  #F4EBD9;   /* deeper cream — cards / bands */
+      --ink:      #2A2620;   /* warm dark — headlines / body / CTAs */
+      --ink-2:    #1E1A14;   /* deepest ink — dark sections */
+      --sand:     #C4956F;   /* warm copper — signature accent */
+      --stone:    #8A8175;   /* muted neutral — secondary text */
+      --rule:     #D9D1C2;   /* hairline rule */
+
+      --serif: 'Fraunces', Georgia, serif;
+      --sans:  'Manrope', system-ui, -apple-system, Segoe UI, sans-serif;
+    }
+
+    /* =========================================================
+       RESET / BASE
+       ========================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; }
+
+    .container { max-width: 1440px; margin: 0 auto; padding: 0 64px; }
+
+    /* Eyebrow label pattern (used across sections) */
+    .eyebrow {
+      display: inline-flex; align-items: center;
+      font-size: 13px; letter-spacing: 0.22em; font-weight: 500;
+      color: var(--sand); text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: ''; display: inline-block;
+      width: 32px; height: 2px; background: var(--sand);
+      margin-right: 18px;
+    }
+    .eyebrow-stone { color: var(--stone); }
+    .eyebrow-stone::before { background: var(--stone); }
+
+    /* Reusable section heading */
+    .section-title {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(36px, 4.5vw, 60px);
+      line-height: 1.05;
+      letter-spacing: -0.018em;
+      color: var(--ink);
+      margin-top: 18px;
+    }
+    .section-title em { font-style: italic; font-weight: 300; }
+
+    /* CTA buttons */
+    .btn {
+      display: inline-block;
+      padding: 18px 36px;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--sans);
+      font-size: 15px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #1E1A14; }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid currentColor;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.08); }
+    .btn-arrow::after { content: '  →'; }
+
+    /* =========================================================
+       HERO — image-led, headline overlaid
+       ========================================================= */
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      background-image: url('assets/hero.jpg');
+      background-size: cover;
+      background-position: center;
+      color: var(--paper);
+      overflow: hidden;
+    }
+    /* Scrim layers — inline divs for max rendering compatibility.
+       Tune the gradient stops if you swap the hero image. */
+    .hero-scrim-top {
+      position: absolute; top: 0; left: 0; right: 0; height: 240px;
+      background: linear-gradient(
+        to bottom,
+        rgba(20, 16, 14, 0.42) 0%,
+        rgba(20, 16, 14, 0.00) 100%
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
+    .hero-scrim-bottom {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 70%;
+      background: linear-gradient(
+        to top,
+        rgba(20, 16, 14, 0.80) 0%,
+        rgba(20, 16, 14, 0.50) 30%,
+        rgba(20, 16, 14, 0.15) 60%,
+        rgba(20, 16, 14, 0.00) 100%
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
+    .hero-scrim-left {
+      position: absolute; top: 0; bottom: 0; left: 0; width: 55%;
+      background: linear-gradient(
+        to right,
+        rgba(20, 16, 14, 0.42) 0%,
+        rgba(20, 16, 14, 0.00) 100%
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .header {
+      position: relative; z-index: 2;
+      display: flex; align-items: flex-start; justify-content: space-between;
+      padding: 36px 64px 0;
+    }
+    /* Wordmark — live HTML text in Fraunces, scales perfectly. */
+    .wordmark {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: 28px;
+      line-height: 0.95;
+      letter-spacing: -0.018em;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .wordmark em {
+      font-style: italic;
+      font-weight: 300;
+      display: block;
+    }
+    .hero .wordmark {
+      color: var(--paper);
+      text-shadow: 0 1px 10px rgba(0, 0, 0, 0.35);
+    }
+    .header nav {
+      display: flex; gap: 44px;
+      padding-top: 14px;
+      font-size: 14px; letter-spacing: 0.18em;
+      text-transform: uppercase; font-weight: 500;
+      color: var(--paper);
+    }
+    .header nav a { opacity: 0.92; }
+    .header nav a:hover { opacity: 1; }
+
+    .hero-content {
+      position: absolute; z-index: 2;
+      left: 64px; right: 64px; bottom: 76px;
+      max-width: 1100px;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center;
+      font-size: 13px; letter-spacing: 0.22em; font-weight: 500;
+      color: var(--paper); text-transform: uppercase;
+      margin-bottom: 26px;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: inline-block;
+      width: 32px; height: 2px; background: var(--sand);
+      margin-right: 18px;
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(48px, 7vw, 104px);
+      line-height: 1.0;
+      letter-spacing: -0.022em;
+      color: var(--paper);
+      margin-bottom: 28px;
+      text-shadow: 0 2px 32px rgba(0, 0, 0, 0.35);
+    }
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 300;
+      display: block;
+    }
+    .hero p {
+      font-size: 22px; line-height: 1.55;
+      max-width: 600px; margin-bottom: 38px;
+      color: var(--paper); opacity: 0.95;
+      text-shadow: 0 1px 14px rgba(0, 0, 0, 0.45);
+    }
+
+    /* =========================================================
+       PROOF BAND
+       ========================================================= */
+    .proof {
+      background: var(--paper-2);
+      padding: 48px 64px;
+      text-align: center;
+    }
+    .proof p {
+      font-family: var(--serif); font-weight: 300;
+      font-size: clamp(20px, 2.2vw, 30px);
+      line-height: 1.35; color: var(--ink);
+      max-width: 1100px; margin: 0 auto;
+      letter-spacing: -0.005em;
+    }
+    .proof em { font-style: italic; font-weight: 300; }
+
+    /* =========================================================
+       THE WORK
+       ========================================================= */
+    .work { padding: 100px 64px 90px; }
+    .work-head {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 48px; gap: 24px;
+    }
+    .work-head .view-all {
+      font-size: 13px; letter-spacing: 0.18em;
+      font-weight: 500; color: var(--ink);
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 4px;
+    }
+    .work-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .work-grid--small {
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .work-card .photo {
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: var(--paper-2);
+      position: relative;
+    }
+    .work-card .photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .work-card--small .photo { aspect-ratio: 16 / 11; }
+    .placeholder-tag {
+      position: absolute; top: 14px; left: 14px;
+      background: rgba(254, 250, 245, 0.92);
+      padding: 4px 10px;
+      font-size: 9px; letter-spacing: 0.2em;
+      color: var(--stone); font-weight: 500;
+      text-transform: uppercase;
+    }
+    .work-card .caption {
+      font-family: var(--serif);
+      font-size: 16px; font-style: italic;
+      color: var(--ink); margin-top: 14px;
+    }
+    .work-card .sub {
+      font-size: 13px; color: var(--stone);
+      margin-top: 4px; letter-spacing: 0.02em;
+    }
+
+    /* =========================================================
+       HOW WE WORK
+       ========================================================= */
+    .how {
+      background: var(--paper-2);
+      padding: 100px 64px;
+    }
+    .how-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 60px; margin-top: 60px;
+    }
+    .step-num {
+      font-family: var(--serif);
+      font-size: 48px; font-style: italic;
+      color: var(--sand); line-height: 1;
+      margin-bottom: 18px;
+    }
+    .step-title {
+      font-family: var(--serif);
+      font-size: 24px; color: var(--ink);
+      line-height: 1.25; margin-bottom: 14px;
+      letter-spacing: -0.01em;
+    }
+    .step-body {
+      font-size: 16px; color: var(--ink);
+      opacity: 0.78; line-height: 1.55;
+    }
+
+    /* =========================================================
+       NOTE FROM THE OWNER
+       ========================================================= */
+    .note {
+      padding: 110px 64px;
+      text-align: center;
+    }
+    .note-inner {
+      display: inline-block; text-align: left;
+      max-width: 920px;
+    }
+    .note .quote {
+      font-family: var(--serif); font-weight: 300;
+      font-size: clamp(22px, 2.4vw, 32px);
+      line-height: 1.4; color: var(--ink);
+      letter-spacing: -0.005em; margin-top: 22px;
+    }
+    .note .quote em { font-style: italic; font-weight: 300; }
+    .note .attribution {
+      font-size: 14px; color: var(--stone);
+      letter-spacing: 0.04em; margin-top: 28px;
+    }
+
+    /* =========================================================
+       FOR DESIGNERS — dark section
+       ========================================================= */
+    .designers {
+      background: var(--ink-2);
+      color: var(--paper);
+      padding: 100px 64px;
+    }
+    .designers-grid {
+      display: grid; grid-template-columns: 1.1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .designers .eyebrow { color: var(--sand); }
+    .designers h2 {
+      font-family: var(--serif); font-weight: 300;
+      font-size: clamp(36px, 4.5vw, 56px);
+      line-height: 1.05; color: var(--paper);
+      letter-spacing: -0.018em; margin-top: 18px; margin-bottom: 28px;
+    }
+    .designers h2 em { font-style: italic; font-weight: 300; }
+    .designers p {
+      font-size: 18px; color: var(--paper);
+      opacity: 0.82; line-height: 1.6;
+      max-width: 540px; margin-bottom: 36px;
+    }
+    .designers .photo {
+      aspect-ratio: 4 / 5;
+      overflow: hidden; background: #000;
+      position: relative;
+    }
+    .designers .photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; opacity: 0.88;
+    }
+    .designers .placeholder-tag {
+      background: rgba(0, 0, 0, 0.6);
+      color: var(--paper);
+    }
+
+    /* =========================================================
+       VISIT A DISPLAY
+       ========================================================= */
+    .visit { padding: 100px 64px; }
+    .visit-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 32px; margin-top: 50px;
+    }
+    .location {
+      border-top: 1px solid var(--rule);
+      padding-top: 28px;
+    }
+    .location h3 {
+      font-family: var(--serif);
+      font-size: 22px; color: var(--ink);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+      font-weight: 400;
+    }
+    .location .addr {
+      font-size: 15px; color: var(--ink);
+      opacity: 0.78; line-height: 1.55;
+      margin-bottom: 6px;
+    }
+    .location .hours {
+      font-size: 14px; color: var(--stone);
+      letter-spacing: 0.02em;
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+    footer {
+      background: var(--ink-2);
+      color: var(--paper);
+      padding: 60px 64px 50px;
+    }
+    .footer-top {
+      display: flex; justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px solid rgba(252, 250, 245, 0.15);
+      padding-bottom: 36px; margin-bottom: 30px;
+    }
+    .footer-top img.logo {
+      width: 240px;
+      background: var(--paper);
+      padding: 8px 12px;
+    }
+    footer .wordmark {
+      font-size: 42px;
+      color: var(--paper);
+      letter-spacing: -0.018em;
+    }
+    .footer-top nav {
+      display: flex; gap: 56px;
+      font-size: 13px; letter-spacing: 0.18em;
+      text-transform: uppercase; font-weight: 500;
+      opacity: 0.82;
+    }
+    .footer-bottom {
+      display: flex; justify-content: space-between;
+      font-size: 12px;
+      color: rgba(252, 250, 245, 0.55);
+      letter-spacing: 0.03em;
+    }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+    @media (max-width: 900px) {
+      .container { padding: 0 28px; }
+      .header { padding: 22px 28px 0; }
+      .header nav { display: none; }
+      .wordmark { font-size: 22px; }
+      footer .wordmark { font-size: 34px; }
+      .hero { min-height: 88vh; }
+      .hero-content { left: 28px; right: 28px; bottom: 50px; }
+      .hero p { font-size: 17px; }
+      .work, .how, .note, .designers, .visit { padding-left: 28px; padding-right: 28px; }
+      .work-head { flex-direction: column; align-items: flex-start; }
+      .work-grid, .work-grid--small { grid-template-columns: 1fr; }
+      .how-grid { grid-template-columns: 1fr; gap: 40px; }
+      .designers-grid { grid-template-columns: 1fr; gap: 50px; }
+      .visit-grid { grid-template-columns: 1fr; gap: 28px; }
+      footer { padding: 50px 28px 36px; }
+      .footer-top { flex-direction: column; align-items: flex-start; gap: 32px; }
+      .footer-top nav { flex-wrap: wrap; gap: 24px 32px; }
+      .footer-bottom { flex-direction: column; gap: 10px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       HERO — full-bleed image with headline overlay
+       ============================================================ -->
+  <section class="hero">
+    <div class="hero-scrim-top"></div>
+    <div class="hero-scrim-bottom"></div>
+    <div class="hero-scrim-left"></div>
+
+    <header class="header">
+      <a href="#" class="wordmark">
+        Modern Blinds<em>&amp; Shades</em>
+      </a>
+      <nav>
+        <a href="#work">The Work</a>
+        <a href="#how">How We Work</a>
+        <a href="#designers">For Designers</a>
+        <a href="#visit">Contact</a>
+      </nav>
+    </header>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">Twin Cities · Since 2014</div>
+      <h1>
+        Designed in your home.
+        <em>Made for your light.</em>
+      </h1>
+      <p>Window treatments designed and installed by a Twin Cities specialist — for lake homes and the designers who serve them.</p>
+      <a class="btn btn-arrow" href="#contact">Schedule a Consultation</a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROOF BAND
+       ============================================================ -->
+  <section class="proof">
+    <p>Three display carts. Twelve years of installations. <em>An ongoing relationship with every client.</em></p>
+  </section>
+
+  <!-- ============================================================
+       THE WORK
+       ============================================================ -->
+  <section id="work" class="work">
+    <div class="work-head">
+      <div>
+        <div class="eyebrow">The Work</div>
+        <h2 class="section-title">Recent <em>installations.</em></h2>
+      </div>
+      <a class="view-all" href="#">VIEW ALL  →</a>
+    </div>
+
+    <!-- Top row: two real high-res photos -->
+    <div class="work-grid">
+      <div class="work-card">
+        <div class="photo">
+          <img src="assets/hero.jpg" alt="Custom valances in a lake-house living room">
+        </div>
+        <div class="caption">Lake Minnetonka, 2024</div>
+        <div class="sub">Custom valances · Cellular shades · Eleven windows</div>
+      </div>
+      <div class="work-card">
+        <div class="photo">
+          <img src="assets/work-1.jpg" alt="Cellular shades in a contemporary living room">
+        </div>
+        <div class="caption">Edina, 2023</div>
+        <div class="sub">Motorized cellular · Designer collaboration</div>
+      </div>
+    </div>
+
+    <!-- Bottom row: two placeholder photos (will be replaced with real shoots) -->
+    <div class="work-grid work-grid--small">
+      <div class="work-card work-card--small">
+        <div class="photo">
+          <img src="assets/work-2-placeholder.jpg" alt="Layered Roman shades and drapery">
+          <span class="placeholder-tag">Placeholder</span>
+        </div>
+        <div class="caption">Wayzata, 2023</div>
+        <div class="sub">Layered Roman + drapery · Living room</div>
+      </div>
+      <div class="work-card work-card--small">
+        <div class="photo">
+          <img src="assets/work-3-placeholder.jpg" alt="Roller shades, modern interior">
+          <span class="placeholder-tag">Placeholder</span>
+        </div>
+        <div class="caption">Minneapolis, 2022</div>
+        <div class="sub">Roller shades · Architect collaboration</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       HOW WE WORK
+       ============================================================ -->
+  <section id="how" class="how">
+    <div class="eyebrow">How We Work</div>
+    <h2 class="section-title">Three steps. <em>No surprises.</em></h2>
+
+    <div class="how-grid">
+      <div>
+        <div class="step-num">01</div>
+        <div class="step-title">In your home, with the samples.</div>
+        <div class="step-body">We bring fabric, hardware, and motorization options to you. We read the light with you. We measure.</div>
+      </div>
+      <div>
+        <div class="step-num">02</div>
+        <div class="step-title">Design decisions, together.</div>
+        <div class="step-body">We narrow the field. We help you choose. We quote a firm number. Nothing is ordered until you say so.</div>
+      </div>
+      <div>
+        <div class="step-num">03</div>
+        <div class="step-title">Installation, by us.</div>
+        <div class="step-body">No subcontractors. We install everything we sell, and we stand behind it. One number to call if anything ever moves.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       A NOTE FROM JAKE
+       ============================================================ -->
+  <section class="note">
+    <div class="note-inner">
+      <div class="eyebrow">A Note From Jake</div>
+      <p class="quote">
+        &ldquo;I started this business because window treatments deserved more care than the big-box experience gives them. <em>Every home is different. Every room is different. We start there — in your home, in your light — not in a showroom.</em>&rdquo;
+      </p>
+      <div class="attribution">— Jake [LASTNAME], Owner</div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOR INTERIOR DESIGNERS
+       ============================================================ -->
+  <section id="designers" class="designers">
+    <div class="designers-grid">
+      <div>
+        <div class="eyebrow">For Interior Designers</div>
+        <h2>You bring the vision. <em>We bring the depth.</em></h2>
+        <p>Fabric behavior, motorization, hardware tolerances, installation logistics. We make sure your client sees you, not us. Trade pricing, dedicated account management, and a phone number that actually picks up.</p>
+        <a class="btn btn-ghost btn-arrow" href="#">Start a Trade Account</a>
+      </div>
+      <div>
+        <div class="photo">
+          <img src="assets/designers-placeholder.jpg" alt="Designer collaboration project">
+          <span class="placeholder-tag">Placeholder</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VISIT A DISPLAY
+       ============================================================ -->
+  <section id="visit" class="visit">
+    <div class="eyebrow">Visit a Display</div>
+    <h2 class="section-title">See the work in person. <em>Three locations.</em></h2>
+
+    <div class="visit-grid">
+      <div class="location">
+        <h3>Ridgedale Center</h3>
+        <div class="addr">12401 Wayzata Blvd<br>Minnetonka, MN 55305</div>
+        <div class="hours">Mall hours · Display cart, Level 1</div>
+      </div>
+      <div class="location">
+        <h3>Southdale Center</h3>
+        <div class="addr">10 Southdale Center<br>Edina, MN 55435</div>
+        <div class="hours">Mall hours · Display cart, Level 2</div>
+      </div>
+      <div class="location">
+        <h3>Eden Prairie Center</h3>
+        <div class="addr">8251 Flying Cloud Dr<br>Eden Prairie, MN 55344</div>
+        <div class="hours">Mall hours · Display cart, Level 1</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer id="contact">
+    <div class="footer-top">
+      <a href="#" class="wordmark">
+        Modern Blinds<em>&amp; Shades</em>
+      </a>
+      <nav>
+        <a href="#work">The Work</a>
+        <a href="#how">How We Work</a>
+        <a href="#designers">For Designers</a>
+        <a href="#visit">Visit Us</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <div>(952) 544-0798 &nbsp;·&nbsp; jake@modernblindsandshades.com</div>
+      <div>© 2014–2026 Modern Blinds &amp; Shades &nbsp;·&nbsp; Twin Cities, MN</div>
+    </div>
+  </footer>
+
+</body>
+</html>
